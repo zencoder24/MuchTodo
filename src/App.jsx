@@ -1,12 +1,13 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import "./App.css";
+import TaskInput from "./components/TaskInput";
+import Heading from "./components/Heading";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <h1 className="text-3xl font-bold text-red-400 underline">Hello world!</h1>
+    <div className=" bg-gradient-to-br from-[#232526] to-[#414245] flex flex-col items-center min-h-screen p-16 ">
+      <Heading />
+      <TaskInput />
+    </div>
   );
 }
 
