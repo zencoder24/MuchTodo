@@ -1,16 +1,31 @@
-import { useState } from "react";
-import TaskInput from "./components/TaskInput";
 import Heading from "./components/Heading";
-import ListItem from "./components/ListItem";
-import TaskList from "./components/TaskList";
+import TodoInput from "./components/TodoInput";
+import TodoList from "./components/TodoList";
 import ListType from "./components/ListType";
+import { useState, useEffect, useCallback } from "react";
+import supabase from "./supabase";
+import { useRealtime } from "react-supabase";
 
 function App() {
+  //NOTE: To be able to use the the react-supabase package, I had to downgrade from React 18 to React
+  //17. I also had to downgrade the supabase package.
+
+  //NOTE:Using useRealtime from the react-supabase package, I am able to update my components live and
+  //without the need for reloading. (https://react-supabase.vercel.app/)
+
+  //TODO: Find out what reexecute does....
+  const [{ data: todos, error, fetching }, reexecute] =
+    useRealtime("todoItems");
+
+  //TODO: Add code for handling errors
+
+  //TODO: Add code for handling fetching (loading) todos
+
   return (
     <div className=" bg-gradient-to-br from-[#232526] to-[#414245] flex flex-col items-center min-h-screen p-16 ">
       <Heading />
-      <TaskInput />
-      <TaskList />
+      <TodoInput />
+      <TodoList todos={todos} />
       <ListType />
     </div>
   );
