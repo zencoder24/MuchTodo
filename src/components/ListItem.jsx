@@ -12,7 +12,7 @@ const ListItem = ({ id, task, isActive }) => {
   //TodoItem.
 
   //The state of the checkbox which will determind if a task has been done or not.
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(!isActive);
 
   //Sets if a TodoItem can be edited and update. An input field is displayed if editable
   //is true and a paragraph element is it is false
@@ -22,7 +22,7 @@ const ListItem = ({ id, task, isActive }) => {
   const [updatedTask, setUpdatedTask] = useState("");
 
   //Function that toggles if the task has been done or not.
-  const handleClick = () => setChecked(!checked);
+  const handleClick = () => setChecked(!isActive);
 
   //Deletion from database
   async function handleDelete() {
@@ -66,13 +66,15 @@ const ListItem = ({ id, task, isActive }) => {
     }
   }
 
+  console.log(isActive + " From the listItem comp");
+
   return (
     <div className="flex justify-between w-full max-w-sm rounded-md px-8 py-3 bg-[#393f54]">
-      <div className="flex space-x-4">
+      <div className="flex space-x-4 items-center">
         <input
           type="checkbox"
-          className=" accent-teal-300"
-          checked={checked}
+          defaultChecked={checked}
+          className="w-4 h-4 text-blue-500 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-500 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
           onChange={handleActive}
           name="taskItem"
           id="taskItem"
@@ -84,16 +86,12 @@ const ListItem = ({ id, task, isActive }) => {
             placeholder={task}
             value={updatedTask}
             onChange={(e) => setUpdatedTask(e.target.value)}
-            className={`${
-              checked
-                ? "line-through text-slate-500  decoration-slate-500"
-                : " text-[#bfd2ff] "
-            } text-lg  border-none outline-none active:outline-none`}
+            className="text-[#bfd2ff] text-lg  border-none outline-none active:outline-none"
           />
         ) : (
           <p
             className={`${
-              checked
+              checked && !isActive
                 ? "line-through text-slate-500  decoration-slate-500"
                 : " text-[#bfd2ff] "
             } text-lg`}
